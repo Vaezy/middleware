@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        Gate::authorize('view-any', Product::class);
+        Gate::authorize('create', Product::class);
         return view('products.create');
     }
 
@@ -32,7 +32,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Gate::authorize('view-any', Product::class);
+        Gate::authorize('create', Product::class);
 
         // Validation basique
         $validated = $request->validate([
