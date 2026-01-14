@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('manage-product', function ($user, Product $product) {
+            return $user->id === $product->user_id;
+        });
+        Gate::define('view-product', function ($user, Product $product) {
+            return $product->is_public || $user->id === $product->user_id;
+        });
     }
 }
